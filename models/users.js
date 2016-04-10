@@ -7,7 +7,8 @@ var UserSchema = new mongoose.Schema({
 	password: String,
 	firstname: String,
 	lastname: String,
-	tagline: String
+	tagline: String,
+	posts: { type: mongoose.Schema.Types.ObjectId, ref: 'Post' }
 });
 
 // Set the password hash
