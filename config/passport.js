@@ -15,12 +15,15 @@ module.exports = function(passport) {
 
 	// Setup local login
 	passport.use('local-login', new LocalStrategy({
+		// override the default username and password
+		usernameField: 'email',
+		passwordField: 'password',
 		passReqToCallback: true
 	},
-	function(req, username, password, done) {
+	function(req, email, password, done) {
 		// asynchronous
 		process.nextTick(function() {
-			User.findOne({ 'username': username}, function(err, user) {
+			User.findOne({ 'email': email}, function(err, user) {
 				// check errors
 				if (err) {
 					return done(err);
@@ -44,9 +47,12 @@ module.exports = function(passport) {
 
 	// Setup local Signup
 	passport.use('local-signup', new LocalStrategy({
+		// overide the default username and password
+		usernameField: 'email',
+		passwordField: 'password',
 		passReqToCallback: true
 	},
-	function(req, email, username, password, done) {
+	function(req, email, password, done) {
 		// asynchronous
 		process.nextTick(function() {
 			// if the user is not already logged in
@@ -56,7 +62,7 @@ module.exports = function(passport) {
 					if (err) {
 						return done(err);
 					}
-					// check email and username
+					// check email
 					if (user) {
 						return done(null, false, req.flash('SignupMessage', '!Warning user already exist.'));
 					}
@@ -64,7 +70,6 @@ module.exports = function(passport) {
 						// create the user
 						var newUser = new User();
 						newUser.email = email;
-						newUser.username = username;
 						newUser.password = newUser.setPassword(password);
 
 						newUser.save(function(err) {
@@ -77,7 +82,7 @@ module.exports = function(passport) {
 				});
 			}
 			else {
-				// everything ok, register user
+				// send user
 				return done(null, req.user);
 			}
 		});
