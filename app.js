@@ -4,11 +4,32 @@ var path = require('path');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var mongoose = require('mongoose');
+var passport = require('passport');
+var session = require('express-session');
+var MongoStore = require('connect-mongo')(session);
 
+// Setup Routes
 var routes = require('./routes/index');
 var users = require('./routes/users');
 
+// Database configuration
+var config = require('./config/db');
+  // connect to the db
+mongoose.connect(config.url);
+  // check if MongoDB is running
+mongoose.connection.on('error', function() {
+  console.error('MongoDB Connection Error. Make sure MongoDB is running.');
+});
+  // check if connection success
+mongoose.connection.once('connected', function() {
+  console.log('db connected successfully');
+});
+
 var app = express();
+
+// Passport configuration
+require('./config/passport')(passport);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -21,6 +42,24 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+// required for passport
+// secret for session
+app.use(session({
+  secret: 'yourSecretHere',
+  saveUninitialized: true,
+  resave: true,
+  // store session on MongoDB using express-session + connect-mongo
+  store: new MongoStore({
+    url: config.url,
+    collection: 'sessions'
+  })
+}));
+
+// Init passport authentication
+app.use(passport.initialize());
+// Persistent login sessions
+app.use(passport.session());
 
 app.use('/', routes);
 app.use('/users', users);

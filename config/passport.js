@@ -31,11 +31,11 @@ module.exports = function(passport) {
 				// check errors and bring the messages
 				if (!user) {
 					// third parameter is a flash message
-					return done(null, false, req.flash('LoginMessage', 'No User Found'));
+					return done(null, false, {'LoginMessage': 'No User Found'});
 				}
 				// check the password
 				if (!user.checkPassword(password)) {
-					return done(null, false, req.flash('LoginMessage', '!Warning password incorrect'));
+					return done(null, false, {'LoginMessage': '!Warning password incorrect'});
 				}
 				else {
 					// everything ok get user
@@ -57,14 +57,14 @@ module.exports = function(passport) {
 		process.nextTick(function() {
 			// if the user is not already logged in
 			if (!req.user) {
-				User.findOne({ 'username': username}, function(err, user) {
-					// check errors
+				User.findOne({ 'email': email}, function(err, user) {
+					// check error
 					if (err) {
 						return done(err);
 					}
 					// check email
 					if (user) {
-						return done(null, false, req.flash('SignupMessage', '!Warning user already exist.'));
+						return done(null, false, {'SignupMessage': '!Warning user already taken.'});
 					}
 					else {
 						// create the user
