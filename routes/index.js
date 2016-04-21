@@ -1,8 +1,13 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
+var jwt = require('express-jwt');
 
 var User = require('../models/users');
+
+
+/* Build an authentication middleware */
+auth = jwt({secret: 'SECRET', userProperty: 'payload'});
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -49,6 +54,31 @@ router.post('/login', function(req, res, next) {
 router.get('/logout', function(req, res) {
 	req.logout();
 	res.redirect('/');
+});
+
+/* UPDATE user route */
+router.put('/:user_id', auth, function(req, res, next) {
+	User.findById(req.params.user_id, function(err, user) {
+		if (err) {
+			res.send(err);
+		}
+
+		// Set user attributes (comes from the req body)
+		user.username = req.body.username;
+		user.password = req.body.password;
+		user.firstname = req.body.firstname;
+		user.lastname = req.body.lastname;
+		user.tagline = req.body.tagline;
+
+		// save the user
+		user.save(function(err) {
+			if (err) {
+				res.send(err);
+			}
+			// give some success message
+			res.json({message: 'User successfully Updated!'});
+		});
+	});
 });
 
 module.exports = router;
