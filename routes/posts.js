@@ -50,6 +50,38 @@ router.post('/', auth, function(req, res) {
 
 });
 
+/* UPDATE Posts */
+router.put('/:post_id', auth, function(req, res) {
+	Post.findById(req.params.post_id, function(err, posts) {
+		if (err) {
+			res.send(err);
+		}
+
+		// update the post 
+		posts.content = req.body.content;
+
+		// save the post
+		posts.save(function(err) {
+			if (err) {
+				res.send(err);
+			}
+			// give some success message
+			res.json({message: 'Post Updated successfully!'});
+		});
+	});
+});
+
+/* DELETE Post by id */
+router.delete('/:post_id', auth, function(req, res) {
+	Post.remove({_id: req.params.post_id}, function(err, post) {
+		if (err) {
+			res.send(err);
+		}
+		// give some success message
+		res.json({message: 'Post Deleted successfully!'});
+	});
+});
+
 
 /* Exports all routes to router */
 module.exports = router;

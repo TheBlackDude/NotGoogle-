@@ -11,7 +11,7 @@ var MongoStore = require('connect-mongo')(session);
 
 // Setup Routes
 var routes = require('./routes/index');
-var users = require('./routes/users');
+var posts = require('./routes/posts');
 
 // Database configuration
 var config = require('./config/db');
@@ -46,7 +46,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // required for passport
 // secret for session
 app.use(session({
-  secret: 'yourSecretHere',
+  secret: 'SECRET',
   saveUninitialized: true,
   resave: true,
   // store session on MongoDB using express-session + connect-mongo
@@ -62,7 +62,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', routes);
-app.use('/users', users);
+app.use('/api', posts);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
