@@ -11,7 +11,7 @@ auth = jwt({secret: 'SECRET', userProperty: 'payload'});
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
-  res.render('index');
+  res.render('index', { user : req });
 });
 
 /* POST Signup data */
