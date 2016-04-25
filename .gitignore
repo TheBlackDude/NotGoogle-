@@ -1,3 +1,9 @@
 node_modules
 npm-debug.log
-public
+angular
+bootstrap
+bootstrap-material-design
+jquery
+ngDialog
+snackbarjs
+underscore.js
