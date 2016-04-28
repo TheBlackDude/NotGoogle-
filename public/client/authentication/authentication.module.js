@@ -1,10 +1,10 @@
 (function() {
 	'use strict';
-	angular.module('MainAppModule.authentication', [
-		'authentication.controllers',
-		'authentication.services'
+	angular.module('mainAppModule.authentication.auth', [
+		'auth.controllers',
+		'auth.services'
 		]);
 
-	angular.module('authentication.controllers', []);
-	angular.module('authentication.services', ['ngCookies']);
+	angular.module('auth.controllers', []);
+	angular.module('auth.services', ['ngCookies']);
 })();

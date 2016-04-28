@@ -11,6 +11,7 @@ var MongoStore = require('connect-mongo')(session);
 
 // Setup Routes
 var routes = require('./routes/index');
+var account = require('./routes/account');
 var posts = require('./routes/posts');
 
 // Database configuration
@@ -62,6 +63,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/', routes);
+app.use('/api', account);
 app.use('/api', posts);
 
 // catch 404 and forward to error handler

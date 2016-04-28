@@ -1,12 +1,12 @@
 (function() {
 	'use strict';
-	angular.module('MainAppModule', [
-		'MainAppModule.config',
-		'MainAppModule.routes',
-		'MainAppModule.authentication'
+	angular.module('mainAppModule', [
+		'mainAppModule.config',
+		'mainAppModule.routes',
+		'mainAppModule.authentication'
 		]);
 
-	angular.module('MainAppModule.config', []);
-	angular.module('MainAppModule.routes', ['ui.router']);
-	angular.module('MainAppModule.authentication', []);
+	angular.module('mainAppModule.config', []);
+	angular.module('mainAppModule.routes', ['ui.router']);
+	angular.module('mainAppModule.authentication', []);
 })();

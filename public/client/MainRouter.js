@@ -1,28 +1,17 @@
 (function() {
 	'use strict';
-	angular.module('MainAppModule.routes')
+	angular.module('mainAppModule.routes')
 	.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider) {
 		$stateProvider
-			.state('home', {
-				url: '/',
-				controller: 'IndexCtrl',
-				controllerAs: 'vm',
-				templateUrl: '/client/templates/layout/index.html'
-			})
 			.state('register', {
 				url: '/register',
-				controller: 'RegisterCtrl',
+				controller: 'RegisterController',
 				controllerAs: 'vm',
-				templateUrl: '/client/templates/authentication/register.html',
-				onEnter: ['$state', 'Authentication', function($state, Authentication) {
-					if (Authentication.isAuthenticated()) {
-						$state.go('home');
-					}
-				}]
+				templateUrl: '/client/templates/authentication/register.html'
 			})
 			.state('login', {
 				url: '/login',
-				controller: 'LoginCtrl',
+				controller: 'LoginController',
 				controllerAs: 'vm',
 				templateUrl: '/client/templates/authentication/login.html',
 				onEnter: ['$state', 'Authentication', function($state, Authentication) {

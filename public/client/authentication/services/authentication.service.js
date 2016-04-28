@@ -1,6 +1,6 @@
 (function() {
 	'use strict';
-	angular.module('authentication.services')
+	angular.module('auth.services')
 	.factory('Authentication', ['$cookies', '$http', '$window', '$log', function($cookies, $http, $window, $log) {
 		var Authentication = {
 			register: register,
@@ -24,7 +24,7 @@
 
 			function registerSuccessFn(data, status, headers, config) {
 				Authentication.saveToken(data.data.token);
-				Authentication.login(Email, Password);
+				//Authentication.login(Email, Password);
 			}
 
 			function registerErrorFn(data, status, headers, config) {

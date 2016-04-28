@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html ng-app="MainAppModule">
+<html ng-app="mainAppModule">
   <% include header.ejs %>
 
   <body>
@@ -32,7 +32,9 @@
       
       <div class="container-fluid">
       	   <div class="row">
-      	   	    <div class="col-xs-12 ng-view"></div>
+      	   	    <div class="col-xs-12">
+      	   	    	<ui-view></ui-view>
+      	   	    </div>
       	   </div>
       </div>
 
