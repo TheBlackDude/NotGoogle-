@@ -45,7 +45,7 @@ router.post('/', auth, function(req, res) {
 			res.send(err);
 		}
 		// give some success message
-		res.json({message: 'User successfully Created!'});
+		res.json({message: 'Post successfully Created!'});
 	});
 
 });

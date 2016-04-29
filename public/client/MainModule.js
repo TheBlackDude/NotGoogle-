@@ -1,5 +1,6 @@
 (function() {
 	'use strict';
+
 	angular.module('mainAppModule', [
 		'mainAppModule.config',
 		'mainAppModule.routes',
@@ -7,6 +8,7 @@
 		]);
 
 	angular.module('mainAppModule.config', []);
-	angular.module('mainAppModule.routes', ['ui.router']);
-	angular.module('mainAppModule.authentication', []);
+	angular.module('mainAppModule.routes', ['ngRoute']);
+	angular.module('mainAppModule.authentication', ['mainAppModule.authentication.auth']);
+
 })();

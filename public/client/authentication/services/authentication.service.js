@@ -1,8 +1,8 @@
 (function() {
 	'use strict';
 	angular.module('auth.services')
-	.factory('Authentication', ['$cookies', '$http', '$window', '$log', function($cookies, $http, $window, $log) {
-		var Authentication = {
+	.factory('Auth', ['$cookies', '$http', '$window', '$log', function($cookies, $http, $window, $log) {
+		var Auth = {
 			register: register,
 			login: login,
 			logout: logout,
@@ -23,7 +23,7 @@
 			}).then(registerSuccessFn, registerErrorFn);
 
 			function registerSuccessFn(data, status, headers, config) {
-				Authentication.saveToken(data.data.token);
+				Auth.saveToken(data.data.token);
 				//Authentication.login(Email, Password);
 			}
 
@@ -39,7 +39,7 @@
 			}).then(loginSuccessFn, loginErrorFn);
 
 			function loginSuccessFn(data, status, headers, config) {
-				Authentication.setAuthenticatedAccount(data.data);
+				Auth.setAuthenticatedAccount(data.data);
 
 				window.location = '/';
 			}
@@ -53,7 +53,7 @@
 			return $http.get('/api/logout').then(logoutSuccessFn, logoutErrorFn);
 
 			function logoutSuccessFn(data, status, headers, config) {
-				Authentication.unauthenticate();
+				Auth.unauthenticate();
 			}
 
 			function logoutErrorFn(data, status, headers, config) {
@@ -78,7 +78,7 @@
 
 		function setAuthenticatedAccount(account) {
 			$cookies.authenticatedAccount = JSON.stringify(account);
-			Authentication.saveToken(account.token);
+			Auth.saveToken(account.token);
 		}
 
 		function isAuthenticated() {
@@ -90,7 +90,7 @@
 		    $window.localStorage.removeItem('google-plus');
 		}
 
-		return Authentication
+		return Auth
 	}]);
 
 })();

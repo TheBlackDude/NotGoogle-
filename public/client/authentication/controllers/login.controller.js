@@ -1,11 +1,11 @@
 (function() {
 	'use strict';
 	angular.module('auth.controllers')
-	.controller('LoginController', ['$scope', 'Authentication', function($scope, Authentication) {
+	.controller('LoginCtrl', ['$scope', 'Auth', function($scope, Auth) {
 		var vm = this;
 		vm.login = login;
 		function login() {
-			Authentication.login(vm.email, vm.password);
+			Auth.login(vm.email, vm.password);
 		}
 
 	}]);

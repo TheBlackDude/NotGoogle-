@@ -1,11 +1,11 @@
 (function() {
 	'use strict';
 	angular.module('auth.controllers')
-	.controller('RegisterController', ['$scope', 'Authentication', function($scope, Authentication) {
+	.controller('RegisterCtrl', ['$scope', 'Auth', function($scope, Auth) {
 		var vm = this;
 		vm.register = register;
 		function register() {
-			Authentication.register(vm.email, vm.password);
+			Auth.register(vm.email, vm.password);
 		}
 
 	}]);
