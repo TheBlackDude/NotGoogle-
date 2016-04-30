@@ -24,7 +24,7 @@
 
 			function registerSuccessFn(data, status, headers, config) {
 				Auth.saveToken(data.data.token);
-				//Authentication.login(Email, Password);
+				Auth.login(Email, Password);
 			}
 
 			function registerErrorFn(data, status, headers, config) {
