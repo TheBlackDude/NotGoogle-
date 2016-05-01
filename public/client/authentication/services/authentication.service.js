@@ -1,13 +1,15 @@
 (function() {
 	'use strict';
 	angular.module('auth.services')
-	.factory('Auth', ['$cookies', '$http', '$window', '$log', function($cookies, $http, $window, $log) {
+	.factory('Auth', ['$cookies', '$http', '$window', '$log', '$location', function($cookies, $http, $window, $log, $location) {
 		var Auth = {
 			register: register,
 			login: login,
 			logout: logout,
 			saveToken: saveToken,
 			getToken: getToken,
+			isLoggedIn: isLoggedIn,
+			currentUser: currentUser,
 			getAuthenticatedAccount: getAuthenticatedAccount,
 			setAuthenticatedAccount: setAuthenticatedAccount,
 			isAuthenticated: isAuthenticated,
@@ -41,7 +43,7 @@
 			function loginSuccessFn(data, status, headers, config) {
 				Auth.setAuthenticatedAccount(data.data);
 
-				window.location = '/';
+				$location.url('/');
 			}
 
 			function loginErrorFn(data, status, headers, config) {
@@ -67,6 +69,24 @@
 
 		function getToken() {
 			return $window.localStorage['google-plus']
+		}
+
+		function isLoggedIn() {
+			var token = Auth.getToken()
+			if (token) {
+				var payload = JSON.parse($window.atob(token.split('.')[1]));
+				return payload.exp > Date.now() / 1000;
+			} else {
+				return false;
+			}
+		}
+
+		function currentUser() {
+			if (Auth.isLoggedIn()) {
+				var token = Auth.getToken();
+				var payload = JSON.parse($window.atob(token.split('.')[1]));
+				return payload.email;
+			}
 		}
 
 		function getAuthenticatedAccount() {

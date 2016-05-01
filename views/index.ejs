@@ -3,7 +3,7 @@
   <% include header.ejs %>
 
   <body>
-      <nav class="navbar navbar-default" role="navigation">
+      <nav class="navbar navbar-default" role="navigation" ng-controller="NavCtrl">
       	   <div class="container-fluid">
       	       <div class="navbar-header">
       	       	    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#not-google-plus-nav">
@@ -17,14 +17,12 @@
 
       	       <div class="collapse navbar-collapse" id="not-google-plus-nav">
       	       	    <ul class="nav navbar-nav pull-right">
-      	       	    	<% if (user.isAuthenticated()) { %>
-      	       	    	    <li><a href="/+<%= user.payload.username %>">+<%= user.payload.username %></a></li>
-      	       	    	    <li><a href="/+<%= user.payload.username %>/settings">Settings</a></li>
-      	       	    	    <li><a href="javascript:void(0)">Logout</a></li>
-      	       	    	<% } else { %>
-      	       	    	     <li><a href="/login">Login</a></li>
-      	       	    	     <li><a href="/register">Register</a></li>
-      	       	    	<% } %>
+  	       	    	    <li ng-show="isLoggedIn()"><a>+{{ currentUser() }}</a></li>
+  	       	    	    <li ng-show="isLoggedIn()"><a href="/+{{ currentUser() }}/settings">Profile</a></li>
+  	       	    	    <li ng-show="isLoggedIn()"><a href="" ng-click="logout()">Logout</a></li>
+
+  	       	    	    <li ng-hide="isLoggedIn()"><a href="/login">Login</a></li>
+  	       	    	    <li ng-hide="isLoggedIn()"><a href="/register">Register</a></li>
       	       	    </ul>
       	       </div>
       	   </div>
