@@ -51,6 +51,17 @@ router.get('/logout', function(req, res) {
 	res.redirect('/');
 });
 
+/* GET Specific user by id */
+router.get('/:user_id', function(req, res) {
+	User.findById(req.params.user_id, function(err, user) {
+		if (err) {
+			res.send(err);
+		}
+		// Send json data
+		res.json(user);
+	});
+});
+
 /* UPDATE user route */
 router.put('/:user_id', auth, function(req, res, next) {
 	User.findById(req.params.user_id, function(err, user) {
